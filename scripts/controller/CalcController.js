@@ -13,7 +13,11 @@ class CalcController{
 
     initialize(){
 
+        this.setdisplayDateTime();
+
         setInterval(()=>{
+
+            this.setdisplayDateTime();
 
             this.displayDate = this.currentDate.toLocaleDateString(this._locale);
             //Pega o valor de displayDate em get e converte na data com toLocale
@@ -22,6 +26,12 @@ class CalcController{
 
         }, 1000);
         
+    }
+
+    setdisplayDateTime(){
+
+        this.displayDate = this.currentDate.toLocaleDateString(this._locale);
+        this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
     }
 
     get displayTime(){
@@ -39,8 +49,6 @@ class CalcController{
     set displayDate(value){
         return this._displayDateElement.innerHTML = value;
     }
-
-
 
     get displayCalc(){
         return this._displayEl.innerHTML;
