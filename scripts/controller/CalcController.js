@@ -42,8 +42,87 @@ class CalcController {
     this._operation = []; // Zera o array, reinicia a calculadora.
   }
 
+  getLastOperation(){
+    return this._operation[this._operation.length-1];
+  }
+
+  setLastOperation(value){
+    this._operation[this._operation.length-1] = value;
+
+  }
+
+
+  isOperator(value){
+
+   return (['+', '-', '*', '%', '/'].indexOf(value) > - 1);
+        
+  }
+
+  pushOperation(value){ //verifica se tem mais de 3 operadores na calculadora
+
+    this._operation.push(value);
+
+    if(this._operation.length > 3){
+
+        let last = this._operation.pop();
+
+        this.calc();
+
+        console.log(this._operation);
+    }
+
+  }
+
+  calc(){
+
+    let last = this._operation.pop();
+
+    let result = eval(this._operation.join(""));
+
+    this._operation = [result, last];
+
+  }
+
+  setLastNumberToDisplay(){
+
+    
+  }
+
   addOperation(value){
-    this._operation.push(value); //"Push" Método que pega uma informação e adiciona dentro de um array.
+
+    if (isNaN(this.getLastOperation())){
+
+        if(this.isOperator(value)) {
+
+            this.setLastOperation(value);
+
+
+
+        }else if(isNaN(value)){
+
+
+           
+
+        }else{
+
+            this.pushOperation(value);
+
+        }
+
+
+    }else{
+
+        if(this.isOperator(value)){
+            this.pushOperation(value);
+
+        }else{
+
+            let newValue = this.getLastOperation().toString() + value.toString();//Pega o ultimo valor, transforma em string e concatena com o valor atual
+            this.setLastOperation(parseInt(newValue));//Pega o valor atual e adiciona dentro do array
+
+            this.setLastNumberToDisplay()
+        }
+    }
   }
 
   setError(){
@@ -59,32 +138,37 @@ class CalcController {
         break;
 
         case 'ce':
-            this.cancelEntry();
+           this.clearEntry();
         break;
 
         case 'soma':
-            this.cancelEntry();
+           this.addOperation('+');
         break;
 
         case 'subtracao':
-            this.cancelEntry();
+            this.addOperation('-');
         break;
 
         case 'divisao':
-            this.cancelEntry();
+            this.addOperation('/');
         break;
 
         case 'multiplicacao':
-            this.cancelEntry();
+            this.addOperation('*');
         break;
 
         case 'porcento':
-            this.cancelEntry();
+            this.addOperation('%');
         break;
 
         case 'igual':
-            this.cancelEntry();
+            
         break;
+
+        case 'ponto':
+            this.addOperation('.');
+        break;
+           
 
         case '0':
         case '1':   
@@ -95,8 +179,8 @@ class CalcController {
         case '6':
         case '7':
         case '8':
-        case '10':
-            this._operation(parseInt(value));
+        case '9':
+            this.addOperation(parseInt(value));
             break;
 
 
