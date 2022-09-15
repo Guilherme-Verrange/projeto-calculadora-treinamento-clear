@@ -8,10 +8,7 @@ class CalcController{
         this._displayTimeElement = document.querySelector("#hora");
         this._currentDate;//Pega a data e hora atual
         this.initialize();
-<<<<<<< HEAD
         this.initButtonsEvent();
-=======
->>>>>>> origin/main
 
     }
 
@@ -32,7 +29,6 @@ class CalcController{
         
     }
 
-<<<<<<< HEAD
     initButtonsEvent(){
 
         let buttons = document.querySelectorAll("#buttons > g, #party > g");
@@ -41,12 +37,10 @@ class CalcController{
             btn.addEventListener('click', e => {
                 console.log(e);
             });
-        });// Criação do foreach onde vai percorrer toda a lista node e pegar os btn.
+        });// Criação do foreach onde vai percorrer toda a lista node e pegar os btn da calculadora
         
     }
 
-=======
->>>>>>> origin/main
     setdisplayDateTime(){
 
         this.displayDate = this.currentDate.toLocaleDateString(this._locale);
