@@ -8,7 +8,10 @@ class CalcController{
         this._displayTimeElement = document.querySelector("#hora");
         this._currentDate;//Pega a data e hora atual
         this.initialize();
+<<<<<<< HEAD
         this.initButtonsEvent();
+=======
+>>>>>>> origin/main
 
     }
 
@@ -29,6 +32,7 @@ class CalcController{
         
     }
 
+<<<<<<< HEAD
     initButtonsEvent(){
 
         let buttons = document.querySelectorAll("#buttons > g, #party > g");
@@ -41,6 +45,8 @@ class CalcController{
         
     }
 
+=======
+>>>>>>> origin/main
     setdisplayDateTime(){
 
         this.displayDate = this.currentDate.toLocaleDateString(this._locale);
