@@ -47,9 +47,17 @@ class CalcController{
         buttons.forEach(btn=>{
             this.addEventListenerAll(btn, 'click', e => {
                 console.log(btn.className.baseVal.replace("btn-", ""));
+                // Criação do foreach onde vai percorrer toda a lista node e pegar os btn da calculadora
             });
-        });// Criação do foreach onde vai percorrer toda a lista node e pegar os btn da calculadora
-        
+
+            this.addEventListenerAll(btn, "mouseover mouseup mousedown", e => {
+
+                btn.style.cursor = "pointer";
+    
+            });
+
+        });
+
     }
 
     setdisplayDateTime(){
