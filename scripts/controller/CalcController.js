@@ -28,14 +28,25 @@ class CalcController{
         }, 1000);
         
     }
+    addEventListenerAll(element, events, fn){
+
+        events.split(' ').forEach(event => {
+
+            element.addEventListener(event, fn, false);
+
+        });
+
+    //Função split que transforma as strings em array e retorna ela mesma.
+
+    }
 
     initButtonsEvent(){
 
         let buttons = document.querySelectorAll("#buttons > g, #party > g");
 
         buttons.forEach(btn=>{
-            btn.addEventListener('click', e => {
-                console.log(e);
+            this.addEventListenerAll(btn, 'click', e => {
+                console.log(btn.className.baseVal.replace("btn-", ""));
             });
         });// Criação do foreach onde vai percorrer toda a lista node e pegar os btn da calculadora
         
