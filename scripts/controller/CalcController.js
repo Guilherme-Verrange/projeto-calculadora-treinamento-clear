@@ -37,7 +37,7 @@ class CalcController{
             btn.addEventListener('click', e => {
                 console.log(e);
             });
-        });//Criação do forEach onde vai percorrer a lista node dos btn.
+        });// 
         
     }
 
