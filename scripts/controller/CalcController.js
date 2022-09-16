@@ -18,8 +18,10 @@ class CalcController {
 
   initialize() {
 
-    this.setLastNumberToDisplay();
+    this.pasteFromClipboard();
     this.setdisplayDateTime();
+    this.setLastNumberToDisplay();
+
 
     setInterval(() => {
       this.setdisplayDateTime();
@@ -39,7 +41,7 @@ class CalcController {
   }
 
 
-  initKeyBoard(){
+  initKeyBoard(){ // Função keyboard.
 
       document.addEventListener('keyup', e=>{
 
@@ -85,12 +87,47 @@ class CalcController {
               case '7':
               case '8':
               case '9':
-                
+
                   this.addOperation(parseInt(e.key));
               break;
+
+              case 'c':
+                    if (e.ctrlKey) this.copyToClipboard();
+                    break;
+
     }
 
       });
+  }
+
+
+  pasteFromClipboard(){
+
+    document.addEventListener('paste', e=>{
+
+        let text = e.clipboardData.getData('Text');
+
+        this.displayCalc = parseFloat(text);//vai receber meu "text" que foi pego com getData
+
+    });
+
+}
+
+  copyToClipboard(){
+
+    let input = document.createElement('input');//Criação do elemento
+
+    input.value = this.displayCalc;
+
+    document.body.appendChild(input); //Adicionando meu input no element
+
+    input.select();
+
+    document.execCommand("Copy");
+
+    input.remove();
+
+
   }
 
 
@@ -323,7 +360,6 @@ class CalcController {
         case 'ponto':
             this.addDot();
         break;
-           
 
         case '0':
         case '1':   
@@ -363,8 +399,8 @@ class CalcController {
   }
 
   setdisplayDateTime() {
-    this.displayDate = this.currentDate.toLocaleDateString(this._locale);
-    this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+    this.displayDate = this.currentDate.toLocaleDateString(this._locale);// Adiciona a Data.
+    this.displayTime = this.currentDate.toLocaleTimeString(this._locale);//Adiciona a hora local.
   }
 
   get displayTime() {
