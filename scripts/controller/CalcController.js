@@ -2,7 +2,8 @@ class CalcController {
   constructor() {
 
 
-
+    this._audio = new Audio('/audio/click.mp3');
+    this._audioOnOff = false;
     this._lastOperator = '';
     this._lastNumber = '0';
     this._operation = [];
@@ -18,20 +19,52 @@ class CalcController {
 
   initialize() {
 
-    this.pasteFromClipboard();
-    this.setdisplayDateTime();
-    this.setLastNumberToDisplay();
 
+          setInterval(() => {
+            this.setdisplayDateTime();
 
-    setInterval(() => {
-      this.setdisplayDateTime();
+            this.displayDate = this.currentDate.toLocaleDateString(this._locale);
+            //Pega o valor de displayDate em get e converte na data com toLocale
+            this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+            //Pega o valor de displayTime em get e converte na data com toLocale
+          }, 1000);
 
-      this.displayDate = this.currentDate.toLocaleDateString(this._locale);
-      //Pega o valor de displayDate em get e converte na data com toLocale
-      this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
-      //Pega o valor de displayTime em get e converte na data com toLocale
-    }, 1000);
+                this.pasteFromClipboard();
+          this.setdisplayDateTime();
+          this.setLastNumberToDisplay();
+
+          document.querySelectorAll('.btn-ac').forEach(btn=>{
+
+            btn.addEventListener('dblclick', e=>{
+
+                this.toggleAudio();
+
+            });
+
+        });
+
   }
+
+
+  toggleAudio(){
+
+    this._audioOnOff = !this._audioOnOff;
+
+}
+
+playAudio(){
+
+    if (this._audioOnOff) {
+
+        this._audio.currentTime = 0;
+        this._audio.play();
+
+    }
+
+}
+
+
+
   addEventListenerAll(element, events, fn) {
     events.split(" ").forEach((event) => {
       element.addEventListener(event, fn, false);
@@ -42,8 +75,10 @@ class CalcController {
 
 
   initKeyBoard(){ // Função keyboard.
-
+    
       document.addEventListener('keyup', e=>{
+
+        this._audio.play();
 
         switch(e.key){
 
@@ -323,8 +358,10 @@ class CalcController {
 
 
   execBtn(value) {
-    switch(value) {
 
+    this._audio.play();
+
+    switch(value) {
         case 'ac':
             this.clearAll();
         break;
@@ -386,7 +423,7 @@ class CalcController {
     let buttons = document.querySelectorAll("#buttons > g, #party > g");
 
     buttons.forEach((btn) => {
-      this.addEventListenerAll(btn, "click", (e) => {
+      this.addEventListenerAll(btn, "click drag", (e) => {
         let btnText = btn.className.baseVal.replace("btn-", "");
         this.execBtn(btnText);
         // Criação do foreach onde vai percorrer toda a lista node e pegar os btn.
