@@ -197,7 +197,7 @@ class CalcController {
         }else{
 
             let newValue = this.getLastOperation().toString() + value.toString();//Pega o ultimo valor, transforma em string e concatena com o valor atual
-            this.setLastOperation(parseFloat(newValue));//Pega o valor atual e adiciona dentro do array
+            this.setLastOperation((newValue));//Pega o valor atual e adiciona dentro do array
 
             this.setLastNumberToDisplay();
         }
@@ -208,6 +208,8 @@ class CalcController {
   addDot(){
 
     let lastOperation = this.getLastOperation();
+
+    if (typeof lastOperation === 'string' && lastOperation.split('').indexOf('.') > -1) return;
 
     if (this.isOperator(lastOperation) || !lastOperation) {
 
@@ -220,7 +222,6 @@ class CalcController {
     }
 
     this.setLastNumberToDisplay();
-    
 }
 
   setError(){
