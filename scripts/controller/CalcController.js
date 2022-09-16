@@ -20,48 +20,48 @@ class CalcController {
   initialize() {
 
 
-          setInterval(() => {
-            this.setdisplayDateTime();
+    setInterval(() => {
+      this.setdisplayDateTime();
 
-            this.displayDate = this.currentDate.toLocaleDateString(this._locale);
-            //Pega o valor de displayDate em get e converte na data com toLocale
-            this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
-            //Pega o valor de displayTime em get e converte na data com toLocale
-          }, 1000);
+      this.displayDate = this.currentDate.toLocaleDateString(this._locale);
+      //Pega o valor de displayDate em get e converte na data com toLocale
+      this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+      //Pega o valor de displayTime em get e converte na data com toLocale
+    }, 1000);
 
-                this.pasteFromClipboard();
-          this.setdisplayDateTime();
-          this.setLastNumberToDisplay();
+    this.pasteFromClipboard();
+    this.setdisplayDateTime();
+    this.setLastNumberToDisplay();
 
-          document.querySelectorAll('.btn-ac').forEach(btn=>{
+    document.querySelectorAll('.btn-ac').forEach(btn => {
 
-            btn.addEventListener('dblclick', e=>{
+      btn.addEventListener('dblclick', e => {
 
-                this.toggleAudio();
+        this.toggleAudio();
 
-            });
+      });
 
-        });
+    });
 
   }
 
 
-  toggleAudio(){
+  toggleAudio() {
 
     this._audioOnOff = !this._audioOnOff;
 
-}
+  }
 
-playAudio(){
+  playAudio() {
 
     if (this._audioOnOff) {
 
-        this._audio.currentTime = 0;
-        this._audio.play();
+      this._audio.currentTime = 0;
+      this._audio.play();
 
     }
 
-}
+  }
 
 
 
@@ -74,81 +74,81 @@ playAudio(){
   }
 
 
-  initKeyBoard(){ // Função keyboard.
-    
-      document.addEventListener('keyup', e=>{
+  initKeyBoard() { // Função keyboard.
 
-        this._audio.play();
+    document.addEventListener('keyup', e => {
 
-        switch(e.key){
+      this._audio.play();
 
-          case 'Escape':
-            this.clearAll();
-            break;
+      switch (e.key) {
 
-            case 'Backspace':
-            this.clearEntry();
-            break;
+        case 'Escape':
+          this.clearAll();
+          break;
 
-            case '+':
+        case 'Backspace':
+          this.clearEntry();
+          break;
 
-            case '-':
-          
-            case '/':
-           
-            case '*':
-          
-            case '%':
-              this.addOperation(e.key);
-            break;
+        case '+':
 
-            case 'Enter':
-            case '=':
-              this.calc();
-            break;
+        case '-':
 
-            case '.':
-            case ',':
-              this.addDot();
-            break;
+        case '/':
 
-            case '0':
-              case '1':   
-              case '2':
-              case '3':
-              case '4':
-              case '5':
-              case '6':
-              case '7':
-              case '8':
-              case '9':
+        case '*':
 
-                  this.addOperation(parseInt(e.key));
-              break;
+        case '%':
+          this.addOperation(e.key);
+          break;
 
-              case 'c':
-                    if (e.ctrlKey) this.copyToClipboard();
-                    break;
+        case 'Enter':
+        case '=':
+          this.calc();
+          break;
 
-    }
+        case '.':
+        case ',':
+          this.addDot();
+          break;
 
-      });
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+
+          this.addOperation(parseInt(e.key));
+          break;
+
+        case 'c':
+          if (e.ctrlKey) this.copyToClipboard();
+          break;
+
+      }
+
+    });
   }
 
 
-  pasteFromClipboard(){
+  pasteFromClipboard() {
 
-    document.addEventListener('paste', e=>{
+    document.addEventListener('paste', e => {
 
-        let text = e.clipboardData.getData('Text');
+      let text = e.clipboardData.getData('Text');
 
-        this.displayCalc = parseFloat(text);//vai receber meu "text" que foi pego com getData
+      this.displayCalc = parseFloat(text);//vai receber meu "text" que foi pego com getData
 
     });
 
-}
+  }
 
-  copyToClipboard(){
+  copyToClipboard() {
 
     let input = document.createElement('input');//Criação do elemento
 
@@ -166,91 +166,91 @@ playAudio(){
   }
 
 
-  clearEntry(){
+  clearEntry() {
 
     this._operation.pop(); // Ao contrário do método push, o "pop" remove a ultima informação do array.
     this.setLastNumberToDisplay();
 
   }
 
-  clearAll(){
+  clearAll() {
     this._operation = [0]; // Zera o array, reinicia a calculadora.
     this.setLastNumberToDisplay();
     this.lastNumber = '';
     this._lastOperator = '';
   }
 
-  getLastOperation(){
-    return this._operation[this._operation.length-1];
+  getLastOperation() {
+    return this._operation[this._operation.length - 1];
   }
 
-  setLastOperation(value){
-    this._operation[this._operation.length-1] = value;
+  setLastOperation(value) {
+    this._operation[this._operation.length - 1] = value;
 
   }
 
 
-  isOperator(value){
+  isOperator(value) {
 
-   return (['+', '-', '*', '%', '/'].indexOf(value) > - 1);
-        
+    return (['+', '-', '*', '%', '/'].indexOf(value) > - 1);
+
   }
 
-  pushOperation(value){ //verifica se tem mais de 3 operadores na calculadora
+  pushOperation(value) { //verifica se tem mais de 3 operadores na calculadora
 
     this._operation.push(value);
 
-    if(this._operation.length > 3){
+    if (this._operation.length > 3) {
 
 
-        this.calc();
+      this.calc();
     }
 
   }
 
 
-  getResult(){
+  getResult() {
 
-    try{
+    try {
 
-       return eval(this._operation.join(""));
-    } 
-    catch(e){
+      return eval(this._operation.join(""));
+    }
+    catch (e) {
       setTimeout(() => {
         this.setError(); // Vai tentrar retorar a operação, se não conseguir, vai retornar um error.
       }, 1);
-      
+
     }
 
   }
 
-  calc(){
+  calc() {
 
     let last = '';
 
     this._lastOperator = this.getLastItem();
 
-    if (this._operation.length < 3){
+    if (this._operation.length < 3) {
 
       let firstItem = this._operation[0];
       this._operation = [firstItem, this._lastOperator, this._lastNumber];
-    
-  }
-    
 
-    if (this._operation.length > 3){
+    }
+
+
+    if (this._operation.length > 3) {
 
       last = this._operation.pop();
 
       this._lastNumber = this.getResult();
 
-    } else  if (this._operation.length == 3){
+    } else if (this._operation.length == 3) {
 
       this._lastNumber = this.getLastItem(false);
 
     }
-    
-   
+
+
 
     console.log('this._lastOperator', this._lastOperator);
     console.log('this._lastNumber', this._lastNumber);
@@ -258,13 +258,13 @@ playAudio(){
 
     let result = this.getResult();
 
-    if (last == '%'){
+    if (last == '%') {
 
       result /= 100;
 
       this._operation = [result];
 
-    }else{
+    } else {
 
       this._operation = [result];
 
@@ -276,73 +276,73 @@ playAudio(){
 
   }
 
-  getLastItem(isOperator = true){
+  getLastItem(isOperator = true) {
 
     let lastItem;
 
-    for (let i = this._operation.length-1; i >= 0; i--){
+    for (let i = this._operation.length - 1; i >= 0; i--) {
 
-        if (this.isOperator(this._operation[i]) == isOperator){
+      if (this.isOperator(this._operation[i]) == isOperator) {
 
-            lastItem = this._operation[i];
-            break;
-        }
-   } 
+        lastItem = this._operation[i];
+        break;
+      }
+    }
 
-   if (!lastItem){
+    if (!lastItem) {
 
-    lastItem = (isOperator) ? this._lastOperator : this.lastNumber;
+      lastItem = (isOperator) ? this._lastOperator : this.lastNumber;
 
-   }
+    }
 
-  return lastItem;
+    return lastItem;
 
-}
+  }
 
-  setLastNumberToDisplay(){
+  setLastNumberToDisplay() {
 
     let lastNumber = this.getLastItem(false);
 
 
     if (!lastNumber) lastNumber = 0;
-        this.displayCalc = lastNumber;
+    this.displayCalc = lastNumber;
   }
 
-  addOperation(value){
+  addOperation(value) {
 
-    if (isNaN(this.getLastOperation())){
+    if (isNaN(this.getLastOperation())) {
 
-        if(this.isOperator(value)) {
+      if (this.isOperator(value)) {
 
-            this.setLastOperation(value);
-
-
-
-        }else{
-
-            this.pushOperation(value);
-            this.setLastNumberToDisplay();
-
-        }
+        this.setLastOperation(value);
 
 
-    }else{
 
-        if(this.isOperator(value)){
-            this.pushOperation(value);
+      } else {
 
-        }else{
+        this.pushOperation(value);
+        this.setLastNumberToDisplay();
 
-            let newValue = this.getLastOperation().toString() + value.toString();//Pega o ultimo valor, transforma em string e concatena com o valor atual
-            this.setLastOperation((newValue));//Pega o valor atual e adiciona dentro do array
+      }
 
-            this.setLastNumberToDisplay();
-        }
+
+    } else {
+
+      if (this.isOperator(value)) {
+        this.pushOperation(value);
+
+      } else {
+
+        let newValue = this.getLastOperation().toString() + value.toString();//Pega o ultimo valor, transforma em string e concatena com o valor atual
+        this.setLastOperation((newValue));//Pega o valor atual e adiciona dentro do array
+
+        this.setLastNumberToDisplay();
+      }
     }
   }
 
 
-  addDot(){
+  addDot() {
 
     let lastOperation = this.getLastOperation();
 
@@ -350,18 +350,18 @@ playAudio(){
 
     if (this.isOperator(lastOperation) || !lastOperation) {
 
-        this.pushOperation('0.');
+      this.pushOperation('0.');
 
     } else {
 
-        this.setLastOperation(lastOperation.toString() + '.');
+      this.setLastOperation(lastOperation.toString() + '.');
 
     }
 
     this.setLastNumberToDisplay();
-}
+  }
 
-  setError(){
+  setError() {
     this.displayCalc = "Error";
   }
 
@@ -370,60 +370,60 @@ playAudio(){
 
     this._audio.play();
 
-    switch(value) {
-        case 'ac':
-            this.clearAll();
+    switch (value) {
+      case 'ac':
+        this.clearAll();
         break;
 
-        case 'ce':
-           this.clearEntry();
+      case 'ce':
+        this.clearEntry();
         break;
 
-        case 'soma':
-           this.addOperation('+');
+      case 'soma':
+        this.addOperation('+');
         break;
 
-        case 'subtracao':
-            this.addOperation('-');
+      case 'subtracao':
+        this.addOperation('-');
         break;
 
-        case 'divisao':
-            this.addOperation('/');
+      case 'divisao':
+        this.addOperation('/');
         break;
 
-        case 'multiplicacao':
-            this.addOperation('*');
+      case 'multiplicacao':
+        this.addOperation('*');
         break;
 
-        case 'porcento':
-            this.addOperation('%');
+      case 'porcento':
+        this.addOperation('%');
         break;
 
-        case 'igual':
-            this.calc();
+      case 'igual':
+        this.calc();
         break;
 
-        case 'ponto':
-            this.addDot();
+      case 'ponto':
+        this.addDot();
         break;
 
-        case '0':
-        case '1':   
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            this.addOperation(parseInt(value));
-            break;
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        this.addOperation(parseInt(value));
+        break;
 
 
-        default:
-            this.setError();
-            break;
+      default:
+        this.setError();
+        break;
     }
 
   }
@@ -471,7 +471,7 @@ playAudio(){
 
   set displayCalc(value) {
 
-    if(value.toString().length > 10){
+    if (value.toString().length > 10) {
       this.setError(); // retorna setError se lenght for > 10
       return false;
     }
