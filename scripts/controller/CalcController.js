@@ -461,6 +461,12 @@ playAudio(){
   }
 
   set displayCalc(value) {
+
+    if(value.toString().length > 10){
+      this.setError(); // retorna setError se lenght for > 10
+      return false;
+    }
+
     this._displayEl.innerHTML = value;
   }
 
