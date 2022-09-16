@@ -211,8 +211,17 @@ playAudio(){
 
   getResult(){
 
-    return eval(this._operation.join(""));
-    
+    try{
+
+       return eval(this._operation.join(""));
+    } 
+    catch(e){
+      setTimeout(() => {
+        this.setError(); // Vai tentrar retorar a operação, se não conseguir, vai retornar um error.
+      }, 1);
+      
+    }
+
   }
 
   calc(){
