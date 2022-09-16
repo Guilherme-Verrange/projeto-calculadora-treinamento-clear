@@ -12,6 +12,8 @@ class CalcController {
   }
 
   initialize() {
+
+    this.setLastNumberToDisplay();
     this.setdisplayDateTime();
 
     setInterval(() => {
@@ -35,11 +37,13 @@ class CalcController {
   clearEntry(){
 
     this._operation.pop(); // Ao contrário do método push, o "pop" remove a ultima informação do array.
+    this.setLastNumberToDisplay();
 
   }
 
   clearAll(){
-    this._operation = []; // Zera o array, reinicia a calculadora.
+    this._operation = [0]; // Zera o array, reinicia a calculadora.
+    this.setLastNumberToDisplay();
   }
 
   getLastOperation(){
@@ -74,15 +78,32 @@ class CalcController {
 
   calc(){
 
-    let last = this._operation.pop();
+    let last = '';
+
+    if (this._operation.length > 3){
+
+      last = this._operation.pop();
+
+    }
+
 
     let result = eval(this._operation.join(""));
 
-    this._operation = [result, last];
+    if (last == '%'){
+
+      result /= 100;
+
+      this._operation = [result];
+
+    }else{
+
+      this._operation = [result];
+
+      if (last) this._operation.push(last);
+
+    }
 
     this.setLastNumberToDisplay();
-
-    console.log(this.setLastNumberToDisplay);
 
   }
 
@@ -98,6 +119,8 @@ class CalcController {
             break;
         }
     }
+
+    if (!lastNumber) lastNumber = 0;
         this.displayCalc = lastNumber;
   }
 
@@ -176,7 +199,7 @@ class CalcController {
         break;
 
         case 'igual':
-            
+            this.calc();
         break;
 
         case 'ponto':
